@@ -1,0 +1,5 @@
+.list { display: grid; gap: 10px; max-width: 800px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 18px; }
+.item summary { cursor: pointer; padding: 16px 0; font-weight: 600; min-height: 48px; }
+.item[open] summary { color: var(--accent); }
+.item p { color: var(--muted); }

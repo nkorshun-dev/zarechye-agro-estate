@@ -1,0 +1,55 @@
+.wrap { width: 100%; position: relative; }
+.nav { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; pointer-events: none; z-index: 1; }
+.nav button { pointer-events: auto; }
+.nav button {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.nav button:disabled { opacity: 0.35; cursor: not-allowed; }
+.months { display: grid; gap: 20px; }
+.title::first-letter { text-transform: uppercase; }
+.title { text-align: center; font-size: 1.1rem; margin: 0 0 8px; line-height: 44px; }
+.grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+@media (max-width: 480px) { .grid { gap: 1px; } }
+.dow { text-align: center; font-size: 0.78rem; color: var(--muted); padding: 4px 0; }
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 2px 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: 600 0.95rem var(--font-body);
+  cursor: pointer;
+  line-height: 1.1;
+}
+.day small { font-size: 0.66rem; font-weight: 500; color: var(--muted); }
+.day:hover:not(.busy):not(.past) { border-color: var(--accent); }
+.holiday small { color: var(--wood); font-weight: 700; }
+.holiday { background: #fbf2e6; }
+.busy { background: repeating-linear-gradient(135deg, #ece6da, #ece6da 4px, #e3dccd 4px, #e3dccd 8px); color: #a29c8c; text-decoration: line-through; cursor: not-allowed; }
+.past { background: transparent; color: #bdb7a8; cursor: not-allowed; }
+.range { background: #dfeadf; }
+.edge, .edge.holiday { background: var(--accent); color: #fff; }
+.edge small { color: #dbe9df; }
+.hint { min-height: 1.6em; margin: 12px 0 8px; font-weight: 600; color: var(--accent-dark); }
+.legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 0; margin: 0; font-size: 0.82rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.swFree { background: #fff; border: 1px solid var(--line); }
+.swBusy { background: #e3dccd; }
+.swSel { background: var(--accent); }
+.swHol { background: #fbf2e6; border: 1px solid var(--wood); }
+
+@media (min-width: 720px) {
+  .months { grid-template-columns: 1fr 1fr; gap: 28px; }
+}

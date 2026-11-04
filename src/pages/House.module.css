@@ -1,0 +1,32 @@
+.layout { display: grid; gap: 32px; margin-top: 28px; }
+.desc { font-size: 1.1rem; }
+.facts, .amen, .rules { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.facts li, .amen li { padding: 10px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+.amen { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.rules li::before { content: '•'; color: var(--wood); margin-right: 8px; }
+.panel { display: grid; gap: 16px; align-content: start; }
+.panelBox { padding: 20px; }
+.panelBox h2 { font-size: 1.3rem; }
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -6px 20px rgba(34, 38, 31, 0.1);
+}
+.panel > :global(.btn) { display: none; }
+@media (min-width: 960px) {
+  .layout { grid-template-columns: 1fr 380px; }
+  .panel { position: sticky; top: 84px; align-self: start; }
+  .panel > :global(.btn) { display: inline-flex; }
+  .bar { display: none; }
+}
+.back { display: inline-block; padding: 10px 0; }

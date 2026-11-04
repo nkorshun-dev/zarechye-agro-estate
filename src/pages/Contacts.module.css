@@ -1,0 +1,8 @@
+.top { display: grid; gap: 24px; margin: 24px 0 40px; }
+.cols { display: grid; gap: 24px; }
+.cols li { margin-bottom: 8px; }
+@media (min-width: 860px) {
+  .top { grid-template-columns: 1fr 1.4fr; }
+  .cols { grid-template-columns: repeat(3, 1fr); }
+}
+.top p a:not(:global(.btn)) { display: inline-block; padding: 10px 0; }

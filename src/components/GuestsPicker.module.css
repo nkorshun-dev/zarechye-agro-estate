@@ -1,0 +1,17 @@
+.box { display: grid; gap: 10px; }
+.row { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+.step { display: flex; align-items: center; gap: 4px; }
+.step button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: #fff;
+  color: var(--accent);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.step button:disabled { opacity: 0.35; cursor: not-allowed; }
+.step output { min-width: 34px; text-align: center; font-weight: 700; }
+.age select { max-width: 160px; }
+.hint { font-size: 0.85rem; margin: 0; }

@@ -1,0 +1,8 @@
+.grid { display: grid; gap: 16px; }
+.card { padding: 20px; }
+.card p { margin-bottom: 0.6em; }
+.top { display: flex; justify-content: space-between; gap: 8px; }
+.stars { color: var(--wood); letter-spacing: 2px; }
+.reply { padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 8px 8px 0; font-size: 0.95rem; }
+@media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }

@@ -1,0 +1,10 @@
+.footer { background: #22261f; color: #e9e4d8; padding: 48px 0 100px; margin-top: 40px; }
+.footer a { color: #e9e4d8; display: inline-block; padding: 10px 0; }
+.grid { display: grid; gap: 24px; }
+.brand { font: 600 1.6rem var(--font-head); margin-bottom: 8px; }
+.links { display: grid; gap: 8px; }
+.demo { margin: 32px auto 0; padding-top: 20px; border-top: 1px solid #3a3f35; color: #b5b0a2; font-size: 0.9rem; }
+@media (min-width: 760px) {
+  .grid { grid-template-columns: 2fr 2fr 1fr; }
+  .footer { padding-bottom: 48px; }
+}

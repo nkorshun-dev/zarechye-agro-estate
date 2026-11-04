@@ -1,0 +1,10 @@
+.box { padding: 20px; }
+.box h3 { margin-bottom: 2px; }
+.list { list-style: none; margin: 14px 0; padding: 0; display: grid; gap: 8px; }
+.list summary, .line { display: flex; justify-content: space-between; gap: 12px; }
+.list summary { cursor: pointer; }
+.nights { list-style: none; padding: 6px 0 0 14px; margin: 0; font-size: 0.88rem; color: var(--muted); }
+.nights li { display: flex; justify-content: space-between; }
+.discount { color: var(--accent); font-weight: 600; }
+.total { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 4px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 1.1rem; }
+.total strong { font: 600 1.6rem var(--font-head); color: var(--accent); }
