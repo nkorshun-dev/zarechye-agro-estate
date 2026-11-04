@@ -11,7 +11,7 @@ export default function Gallery({ images, name }: { images: string[]; name: stri
       <div className={s.grid}>
         {images.map((src, i) => (
           <button key={src} type="button" className={s.thumb} onClick={() => setIndex(i)} aria-label={`Открыть фото ${i + 1} из ${images.length}: ${name}`}>
-            <img src={src.replace('w=1400', 'w=900')} alt={`${name}, фото ${i + 1}`} loading={i ? 'lazy' : 'eager'} />
+            <img draggable="false" src={src.replace('w=1400', 'w=900')} alt={`${name}, фото ${i + 1}`} loading={i ? 'lazy' : 'eager'} />
           </button>
         ))}
       </div>
@@ -27,7 +27,7 @@ export default function Gallery({ images, name }: { images: string[]; name: stri
       >
         {index !== null && (
           <div className={s.box}>
-            <img src={images[index]} alt={`${name}, фото ${index + 1}`} className={s.big} />
+            <img draggable="false" src={images[index]} alt={`${name}, фото ${index + 1}`} className={s.big} />
             <div className={s.nav}>
               <button type="button" className="btn btnGhost" onClick={() => step(-1)}>
                 ← Назад

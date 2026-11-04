@@ -13,7 +13,7 @@ export default function Services() {
       <div className={s.grid}>
         {extras.map((e) => (
           <article key={e.id} className={`card ${s.card}`}>
-            <img src={e.image} alt="" loading="lazy" />
+            <img draggable="false" src={e.image} alt="" loading="lazy" />
             <div className={s.body}>
               <h3>{e.name}</h3>
               <p>{e.description}</p>

@@ -121,3 +121,6 @@ a { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Защита картинок: без перетаскивания и без меню «сохранить» при долгом нажатии */
+img { -webkit-user-drag: none; user-select: none; -webkit-touch-callout: none; }

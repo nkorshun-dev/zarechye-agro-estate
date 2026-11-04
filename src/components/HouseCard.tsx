@@ -22,7 +22,7 @@ export default function HouseCard({ house, query, status }: Props) {
   return (
     <article className={`card ${s.card} ${unavailable ? s.dim : ''}`}>
       <Link to={`/houses/${house.slug}${query}`} className={s.photo} tabIndex={-1} aria-hidden="true">
-        <img src={house.images[0].replace('w=1400', 'w=800')} alt="" loading="lazy" />
+        <img draggable="false" src={house.images[0].replace('w=1400', 'w=800')} alt="" loading="lazy" />
       </Link>
       <div className={s.body}>
         <h3>

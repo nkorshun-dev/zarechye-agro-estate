@@ -115,7 +115,7 @@ export default function Home() {
           <div className={s.activities}>
             {activities.map(([t, d, id]) => (
               <article key={t} className={s.act}>
-                <img src={img(id)} alt="" loading="lazy" />
+                <img draggable="false" src={img(id)} alt="" loading="lazy" />
                 <div>
                   <h3>{t}</h3>
                   <p>{d}</p>
@@ -131,7 +131,7 @@ export default function Home() {
 
       <section className="section container">
         <div className={s.kitchen}>
-          <img src={img('1542718610-a1d656d1884c')} alt="Дом на закате" loading="lazy" />
+          <img draggable="false" src={img('1542718610-a1d656d1884c')} alt="Дом на закате" loading="lazy" />
           <div>
             <h2>Кухня</h2>
             <p>Завтрак приносим в домик к девяти: сырники, яичница с деревенскими яйцами, каша, блины с вареньем. 17 BYN с человека.</p>
