@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { selectDay, type Selection } from '../lib/availability'
+import { isRangeFree, selectDay, type Selection } from '../lib/availability'
 import { addDays, addMonths, daysInMonth, startOfMonth, weekday } from '../lib/dates'
 import { formatDateWeekday, formatMonth, formatMoney } from '../lib/format'
 import { nightType } from '../lib/pricing'
@@ -22,6 +22,7 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
   const [view, setView] = useState(startOfMonth(checkIn ?? today))
   const [focus, setFocus] = useState(checkIn ?? today)
   const [hint, setHint] = useState('')
+  const [hover, setHover] = useState<string | null>(null)
   const root = useRef<HTMLDivElement>(null)
   const needFocus = useRef(false)
 
@@ -51,6 +52,13 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
     setHint(r.hint)
     if (r.selection.checkIn !== checkIn || r.selection.checkOut !== checkOut) onChange(r.selection)
   }
+
+  const reset = () => {
+    setHint('Даты сброшены. Выберите дату заезда.')
+    onChange({ checkIn: null, checkOut: null })
+  }
+  // подсветка будущего диапазона при наведении/фокусе, только если его можно выбрать
+  const preview = checkIn && !checkOut && hover && hover > checkIn && isRangeFree(busy, checkIn, hover) ? hover : null
 
   const onKey = (e: React.KeyboardEvent) => {
     const moves: Record<string, string> = {
@@ -89,7 +97,7 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
           →
         </button>
       </div>
-      <div className={s.months} onKeyDown={onKey}>
+      <div className={s.months} onKeyDown={onKey} onMouseLeave={() => setHover(null)} onBlur={() => setHover(null)}>
         {Array.from({ length: months }, (_, m) => {
           const first = addMonths(view, m)
           const count = daysInMonth(first)
@@ -111,6 +119,7 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
                   const isPast = d < today
                   const isBusy = !isPast && busy.has(d)
                   const inRange = checkIn && checkOut && d > checkIn && d < checkOut
+                  const inPreview = preview && d > checkIn! && d <= preview
                   const type = nightType(d)
                   const cls = [
                     s.day,
@@ -118,6 +127,7 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
                     isBusy && s.busy,
                     (d === checkIn || d === checkOut) && s.edge,
                     inRange && s.range,
+                    inPreview && s.preview,
                     !isPast && !isBusy && (type === 'holiday' || type === 'newyear') && s.holiday,
                   ]
                     .filter(Boolean)
@@ -133,6 +143,11 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
                       aria-pressed={d === checkIn || d === checkOut || !!inRange}
                       aria-disabled={isPast || isBusy}
                       onClick={() => click(d)}
+                      onMouseEnter={() => setHover(d)}
+                      onFocus={() => {
+                        setHover(d)
+                        setFocus(d) // roving tabindex следует за реальным фокусом
+                      }}
                     >
                       <span>{Number(d.slice(8))}</span>
                       {priceFor && !isPast && !isBusy && <small>{priceFor(d)}</small>}
@@ -144,9 +159,16 @@ export default function DateRangeCalendar({ today, busy, checkIn, checkOut, onCh
           )
         })}
       </div>
-      <p className={s.hint} role="status" aria-live="polite">
-        {hint || baseHint}
-      </p>
+      <div className={s.status}>
+        <p className={s.hint} role="status" aria-live="polite">
+          {hint || baseHint}
+        </p>
+        {checkIn && (
+          <button type="button" className={s.reset} onClick={reset}>
+            Сбросить даты
+          </button>
+        )}
+      </div>
       <ul className={s.legend} aria-label="Обозначения">
         <li><i className={s.swFree} /> свободно</li>
         <li><i className={s.swBusy} /> занято</li>

@@ -53,3 +53,7 @@
 @media (min-width: 720px) {
   .months { grid-template-columns: 1fr 1fr; gap: 28px; }
 }
+.preview { background: #eaf1ea; border-color: #b9cfbd; }
+.status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; margin: 12px 0 8px; }
+.status .hint { margin: 0; flex: 1 1 240px; }
+.reset { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--accent); font: 600 0.95rem var(--font-body); text-decoration: underline; cursor: pointer; }

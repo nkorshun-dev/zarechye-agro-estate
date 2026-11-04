@@ -1,3 +1,4 @@
+import DemoLink from '../components/DemoLink'
 import Map from '../components/Map'
 import { estate, route } from '../data/estate'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -13,13 +14,13 @@ export default function Contacts() {
           <p>{estate.address}</p>
           <p className="muted">Координаты: {estate.coords.lat}, {estate.coords.lon}</p>
           <p>
-            Телефон и Viber: <a href={`tel:${estate.phoneRaw}`}>{estate.phone}</a>
+            Телефон и Viber: <DemoLink label={`Телефон ${estate.phone}`}>{estate.phone}</DemoLink>
           </p>
           <p>
-            Telegram: <a href={`https://t.me/${estate.telegram}`}>@{estate.telegram}</a>
+            Telegram: <DemoLink label={`Telegram @${estate.telegram}`}>@{estate.telegram}</DemoLink>
           </p>
           <p>
-            Почта: <a href={`mailto:${estate.email}`}>{estate.email}</a>
+            Почта: <DemoLink label={`Почта ${estate.email}`}>{estate.email}</DemoLink>
           </p>
           <p className="muted">Отвечаем с 9:00 до 21:00. Хозяева: {estate.owners}.</p>
         </div>

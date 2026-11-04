@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useAvailability } from '../hooks/useAvailability'
 import { formatDate } from '../lib/format'
 import DateRangeCalendar from './DateRangeCalendar'
 import Modal from './Modal'
-import s from './DatesPicker.module.css'
 
 interface Props {
   checkIn: string | null
@@ -15,12 +14,16 @@ interface Props {
 export default function DatesPicker({ checkIn, checkOut, onChange }: Props) {
   const [open, setOpen] = useState(false)
   const { today } = useAvailability()
+  const id = useId()
   return (
     <>
-      <button type="button" className={s.btn} onClick={() => setOpen(true)}>
-        <span className={s.cap}>Даты</span>
-        {checkIn && checkOut ? `${formatDate(checkIn)} — ${formatDate(checkOut)}` : 'Выберите даты'}
-      </button>
+      <div className="field">
+        <span id={id}>Даты</span>
+        <button type="button" className="fieldBtn" aria-labelledby={`${id} ${id}v`} aria-haspopup="dialog" onClick={() => setOpen(true)}>
+          <span id={`${id}v`}>{checkIn && checkOut ? `${formatDate(checkIn)} — ${formatDate(checkOut)}` : 'Выберите даты'}</span>
+          <span aria-hidden="true" className="fieldChevron">▾</span>
+        </button>
+      </div>
       <Modal open={open} title="Даты поездки" onClose={() => setOpen(false)} wide>
         <DateRangeCalendar
           today={today}

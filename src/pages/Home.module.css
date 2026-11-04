@@ -5,10 +5,10 @@
 .heroInner h1 { max-width: 14em; }
 .lead { max-width: 36em; font-size: 1.1rem; }
 .search { display: grid; gap: 12px; padding: 16px; margin-top: 16px; color: var(--text); max-width: 900px; }
-.guests select { min-height: 56px; }
+.search :global(.field) select { min-height: 48px; }
 @media (min-width: 760px) {
   .search { grid-template-columns: 2fr 1fr auto; align-items: end; }
-  .search :global(.btn) { min-height: 56px; }
+  .search :global(.btn) { min-height: 48px; }
 }
 
 .about { display: grid; gap: 32px; }

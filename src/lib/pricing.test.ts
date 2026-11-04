@@ -107,14 +107,42 @@ describe('занятость', () => {
     expect(a).toEqual(generateBookings('sosnovy', today))
     expect(diffDays(today, a[a.length - 1].to)).toBeGreaterThan(120)
   })
-  it('нельзя выбрать диапазон через занятый день', () => {
+  it('клик через занятый день делает новый заезд', () => {
     const busy = new Set(['2026-11-12'])
     let r = selectDay({ checkIn: null, checkOut: null }, '2026-11-10', today, busy)
     expect(r.selection.checkIn).toBe('2026-11-10')
+    expect(selectDay(r.selection, '2026-11-12', today, busy).selection).toEqual({ checkIn: '2026-11-10', checkOut: '2026-11-12' }) // выезд утром занятой ночи можно
     r = selectDay(r.selection, '2026-11-14', today, busy)
-    expect(r.selection.checkOut).toBeNull()
-    expect(r.hint).toMatch(/занятая ночь/)
-    expect(selectDay(r.selection, '2026-11-12', today, busy).selection.checkOut).toBe('2026-11-12') // выезд утром занятой ночи можно
+    expect(r.selection).toEqual({ checkIn: '2026-11-14', checkOut: null })
+    expect(r.hint).toMatch(/занятая ночь.*выезд не выставлен/)
+    expect(selectDay(r.selection, '2026-11-16', today, busy).selection).toEqual({ checkIn: '2026-11-14', checkOut: '2026-11-16' })
+  })
+  it('занятый день через занятые ночи: заезд остаётся', () => {
+    const busy = new Set(['2026-11-12', '2026-11-13'])
+    const r = selectDay({ checkIn: '2026-11-10', checkOut: null }, '2026-11-13', today, busy)
+    expect(r.selection).toEqual({ checkIn: '2026-11-10', checkOut: null })
+    expect(r.hint).toMatch(/не позже 12/)
+  })
+  it('занятый день не становится заездом', () => {
+    const busy = new Set(['2026-11-12'])
+    expect(selectDay({ checkIn: null, checkOut: null }, '2026-11-12', today, busy).selection.checkIn).toBeNull()
+    const full = { checkIn: '2026-11-04', checkOut: '2026-11-06' }
+    expect(selectDay(full, '2026-11-12', today, busy).selection).toEqual(full)
+  })
+  it('клик раньше заезда — новый заезд', () => {
+    const r = selectDay({ checkIn: '2026-11-10', checkOut: null }, '2026-11-05', today, new Set())
+    expect(r.selection).toEqual({ checkIn: '2026-11-05', checkOut: null })
+    expect(r.hint).toMatch(/раньше заезда/)
+  })
+  it('клик по заезду сбрасывает даты', () => {
+    const empty = { checkIn: null, checkOut: null }
+    expect(selectDay({ checkIn: '2026-11-10', checkOut: null }, '2026-11-10', today, new Set()).selection).toEqual(empty)
+    expect(selectDay({ checkIn: '2026-11-10', checkOut: '2026-11-12' }, '2026-11-10', today, new Set()).selection).toEqual(empty)
+  })
+  it('при выбранном диапазоне клик — новый заезд, прошедшая дата — без изменений', () => {
+    const full = { checkIn: '2026-11-10', checkOut: '2026-11-12' }
+    expect(selectDay(full, '2026-11-20', today, new Set()).selection).toEqual({ checkIn: '2026-11-20', checkOut: null })
+    expect(selectDay(full, '2026-11-01', today, new Set()).selection).toEqual(full)
   })
   it('мин. ночи дают подсказку', () => {
     const r = selectDay({ checkIn: '2026-11-13', checkOut: null }, '2026-11-14', today, new Set())

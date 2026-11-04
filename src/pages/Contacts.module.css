@@ -5,4 +5,4 @@
   .top { grid-template-columns: 1fr 1.4fr; }
   .cols { grid-template-columns: repeat(3, 1fr); }
 }
-.top p a:not(:global(.btn)) { display: inline-block; padding: 10px 0; }
+.top p a:not(:global(.btn)), .top p :global(.demo-link) { display: inline-block; padding: 10px 0; }

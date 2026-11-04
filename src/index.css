@@ -111,6 +111,27 @@ a { color: var(--accent); }
   width: 100%;
 }
 .field input[aria-invalid='true'] { border-color: var(--danger); }
+/* Кнопка, которая выглядит как поле (даты, гости): та же рамка и высота, что у select */
+.fieldBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: 400 1rem var(--font-body);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+.fieldBtn:hover { border-color: var(--accent); }
+.fieldChevron { color: var(--text); font-size: 1.1rem; line-height: 1; }
+/* Декоративные контакты в демо: выглядят как ссылка, но никуда не ведут */
+.demo-link { color: var(--accent); text-decoration: underline; cursor: default; }
 .error { color: var(--danger); font-size: 0.85rem; font-weight: 500; }
 
 .reveal { animation: rise 0.6s ease both; }

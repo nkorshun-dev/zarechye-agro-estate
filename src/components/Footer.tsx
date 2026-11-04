@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { estate } from '../data/estate'
+import DemoLink from './DemoLink'
 import s from './Footer.module.css'
 
 export default function Footer() {
@@ -12,10 +13,10 @@ export default function Footer() {
         </div>
         <div>
           <p>
-            <a href={`tel:${estate.phoneRaw}`}>{estate.phone}</a>
+            <DemoLink label={`Телефон ${estate.phone}`}>{estate.phone}</DemoLink>
           </p>
           <p>
-            <a href={`mailto:${estate.email}`}>{estate.email}</a>
+            <DemoLink label={`Почта ${estate.email}`}>{estate.email}</DemoLink>
           </p>
         </div>
         <nav aria-label="Разделы в подвале" className={s.links}>

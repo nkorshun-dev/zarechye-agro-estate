@@ -55,20 +55,28 @@ export interface Selection {
   checkOut: string | null
 }
 
-/** Реакция на клик по дню: новый выбор + подсказка, если выбрать нельзя. Чистая функция — легко тестировать. */
+/**
+ * Реакция на клик по дню: новый выбор + подсказка. Чистая функция — одна на все календари.
+ * Первый клик — заезд; клик позже заезда через свободные ночи — выезд;
+ * клик раньше заезда или через занятую ночь — новый заезд; клик по заезду — сброс.
+ */
 export const selectDay = (sel: Selection, day: string, today: string, busy: Set<string>): { selection: Selection; hint: string } => {
   if (day < today) return { selection: sel, hint: 'Эта дата уже прошла.' }
   const { checkIn, checkOut } = sel
-  const startNew = (): { selection: Selection; hint: string } =>
+  if (day === checkIn) return { selection: { checkIn: null, checkOut: null }, hint: 'Даты сброшены. Выберите дату заезда.' }
+  const startNew = (why = ''): { selection: Selection; hint: string } =>
     busy.has(day)
       ? { selection: sel, hint: `Ночь на ${formatDate(day)} занята. Выберите свободную дату заезда.` }
-      : { selection: { checkIn: day, checkOut: null }, hint: 'Теперь выберите дату выезда.' }
+      : { selection: { checkIn: day, checkOut: null }, hint: `${why}Теперь выберите дату выезда.` }
 
-  if (!checkIn || checkOut || day <= checkIn) return startNew()
+  if (!checkIn || checkOut) return startNew()
+  if (day < checkIn) return startNew(`${formatDate(day)} раньше заезда, поэтому это новая дата заезда. `)
 
   const firstBusy = eachNight(checkIn, day).find((n) => busy.has(n))
   if (firstBusy) {
-    return { selection: sel, hint: `Между этими датами есть занятая ночь (${formatDate(firstBusy)}). Выезд возможен не позже ${formatDate(firstBusy)}.` }
+    // по занятому дню заехать нельзя — оставляем заезд и подсказываем крайний выезд
+    if (busy.has(day)) return { selection: sel, hint: `Между этими датами есть занятая ночь (${formatDate(firstBusy)}). Выезд возможен не позже ${formatDate(firstBusy)}.` }
+    return startNew(`Между датами есть занятая ночь (${formatDate(firstBusy)}), поэтому выезд не выставлен: ${formatDate(day)} — новая дата заезда. `)
   }
   const { required, reason } = minNightsFor(checkIn, day)
   if (diffDays(checkIn, day) < required) return { selection: sel, hint: `${reason} Выберите выезд не раньше ${formatDate(addDays(checkIn, required))}.` }
