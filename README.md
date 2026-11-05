@@ -71,3 +71,5 @@ npm run preview
 - Локальные варианты: `public/img/hero-{640,1024,1600,2400}.{avif,webp}` и `hero-m{400,600,800}.{avif,webp}`. Максимальный мобильный файл — 29 078 байт AVIF / 45 170 байт WebP (менее 200 КБ). Используются `picture`, `srcset` и соответствующий preload; первый экран без анимации появления и параллакса.
 - Шрифты в `public/fonts/`: Lora (500–600) и Manrope (400–700), локальные WOFF2 с кириллическим и латинским подмножествами, `font-display: swap`; кириллические файлы предзагружаются.
 - Шрифты распространяются по SIL Open Font License 1.1: [Lora](public/fonts/Lora-OFL.txt), [Manrope](public/fonts/Manrope-OFL.txt). Оригиналы лицензий: [Google Fonts / Lora](https://raw.githubusercontent.com/google/fonts/main/ofl/lora/OFL.txt), [Google Fonts / Manrope](https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt).
+
+QA performance: initial-page CSS is embedded into dist/index.html after build (scripts/inline-critical-css.mjs); source styles and lazy route styles stay unchanged. This removes a blocking stylesheet request.
