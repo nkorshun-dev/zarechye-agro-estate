@@ -11,13 +11,24 @@
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:title" content="Агроусадьба «Заречье» — домики у озера Дривяты" />
     <meta property="og:description" content="Четыре дома, баня на дровах и тишина у озера. Бронирование по датам с расчётом цены." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&h=630&q=70" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1653760253102-e50369ee652c?auto=format&fit=crop&w=1200&h=630&q=70" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="font" type="font/woff2" href="/zarechye/fonts/manrope-cyrillic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/zarechye/fonts/lora-cyrillic.woff2" crossorigin />
+    <link rel="preload" as="image" type="image/avif" media="(max-width: 760px)" imagesrcset="/zarechye/img/hero-m400.avif 400w, /zarechye/img/hero-m600.avif 600w, /zarechye/img/hero-m800.avif 800w" imagesizes="100vw" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/avif" media="(min-width: 761px)" imagesrcset="/zarechye/img/hero-640.avif 640w, /zarechye/img/hero-1024.avif 1024w, /zarechye/img/hero-1600.avif 1600w, /zarechye/img/hero-2400.avif 2400w" imagesizes="100vw" fetchpriority="high" />
+    <style>#hero-stage{position:absolute;top:65px;left:0;right:0;height:min(100dvh - 64px,820px);overflow:hidden;z-index:-2}#hero-stage img{position:absolute;left:0;top:-40px;width:100%;height:calc(100% + 80px);object-fit:cover}</style>
   </head>
   <body>
+    <!-- Hero-картинка живёт в HTML: LCP не зависит от JS. Home.tsx подгоняет блок под секцию hero. -->
+    <div id="hero-stage"><picture id="hero-pic">
+      <source media="(max-width: 760px)" type="image/avif" srcset="/zarechye/img/hero-m400.avif 400w, /zarechye/img/hero-m600.avif 600w, /zarechye/img/hero-m800.avif 800w" sizes="100vw" />
+      <source media="(max-width: 760px)" type="image/webp" srcset="/zarechye/img/hero-m400.webp 400w, /zarechye/img/hero-m600.webp 600w, /zarechye/img/hero-m800.webp 800w" sizes="100vw" />
+      <source type="image/avif" srcset="/zarechye/img/hero-640.avif 640w, /zarechye/img/hero-1024.avif 1024w, /zarechye/img/hero-1600.avif 1600w, /zarechye/img/hero-2400.avif 2400w" sizes="100vw" />
+      <source type="image/webp" srcset="/zarechye/img/hero-640.webp 640w, /zarechye/img/hero-1024.webp 1024w, /zarechye/img/hero-1600.webp 1600w, /zarechye/img/hero-2400.webp 2400w" sizes="100vw" />
+      <img src="/zarechye/img/hero-1600.webp" width="2400" height="1800" alt="" fetchpriority="high" decoding="async" />
+    </picture></div>
+    <script>if(location.pathname.replace(/\/$/,"")!=="/zarechye")document.getElementById("hero-stage").hidden=true</script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

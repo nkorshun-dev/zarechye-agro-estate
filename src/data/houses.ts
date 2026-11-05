@@ -85,5 +85,4 @@ export const amenityIcons: Record<Amenity, string> = {
   sauna: '♨', fireplace: '🔥', lake: '🌊', pets: '🐾', wifi: '📶', kitchen: '🍳', terrace: '🪑', bbq: '🥩', parking: '🚗',
 }
 
-export const heroImage = img('1501785888041-af3ef285b470', 2000)
 export const getHouse = (slug: string | null | undefined) => houses.find((h) => h.slug === slug)

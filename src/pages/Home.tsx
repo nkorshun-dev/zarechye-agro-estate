@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import DatesPicker from '../components/DatesPicker'
 import Faq from '../components/Faq'
@@ -6,7 +6,7 @@ import HouseCard from '../components/HouseCard'
 import Map from '../components/Map'
 import Reviews from '../components/Reviews'
 import { estate, route } from '../data/estate'
-import { heroImage, houses } from '../data/houses'
+import { houses } from '../data/houses'
 import { usePageMeta } from '../hooks/usePageMeta'
 import s from './Home.module.css'
 
@@ -33,13 +33,25 @@ export default function Home() {
   const nav = useNavigate()
   const [dates, setDates] = useState<[string | null, string | null]>([null, null])
   const [adults, setAdults] = useState(2)
-  const bg = useRef<HTMLDivElement>(null)
+  const heroEl = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const onScroll = () => bg.current?.style.setProperty('transform', `translateY(${Math.min(window.scrollY, 900) * 0.3}px)`)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+  // hero-картинка лежит в index.html (#hero-stage), чтобы LCP не ждал JS: здесь только показываем её и подгоняем под секцию
+  useLayoutEffect(() => {
+    const stage = document.getElementById('hero-stage')
+    const hero = heroEl.current
+    if (!stage || !hero) return
+    stage.hidden = false
+    const fit = () => {
+      stage.style.top = hero.offsetTop + 'px'
+      stage.style.height = hero.offsetHeight + 'px'
+    }
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(hero)
+    return () => {
+      ro.disconnect()
+      stage.hidden = true
+    }
   }, [])
 
   const search = () => {
@@ -53,11 +65,10 @@ export default function Home() {
 
   return (
     <>
-      <section className={s.hero}>
-        <div ref={bg} className={s.bg} style={{ backgroundImage: `url(${heroImage})` }} />
+      <section ref={heroEl} className={s.hero}>
         <div className={`container ${s.heroInner}`}>
-          <h1 className="reveal">Тишина, баня и озеро в пятидесяти метрах</h1>
-          <p className={`reveal ${s.lead}`}>Четыре дома на четырёх гектарах в Браславском районе. Выберите даты, и сразу увидите свободные домики и итоговую цену.</p>
+          <h1>Тишина, баня и озеро в пятидесяти метрах</h1>
+          <p className={s.lead}>Четыре дома на четырёх гектарах в Браславском районе. Выберите даты, и сразу увидите свободные домики и итоговую цену.</p>
           <form
             className={`card ${s.search}`}
             onSubmit={(e) => {

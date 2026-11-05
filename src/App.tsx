@@ -1,15 +1,15 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import ToastProvider from './components/Toast'
-import Booking from './pages/Booking'
-import Contacts from './pages/Contacts'
+const Booking = lazy(() => import('./pages/Booking'))
+const Contacts = lazy(() => import('./pages/Contacts'))
 import Home from './pages/Home'
-import House from './pages/House'
-import Houses from './pages/Houses'
-import NotFound from './pages/NotFound'
-import Services from './pages/Services'
+const House = lazy(() => import('./pages/House'))
+const Houses = lazy(() => import('./pages/Houses'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+const Services = lazy(() => import('./pages/Services'))
 
 function Layout() {
   const { pathname } = useLocation()
@@ -20,7 +20,9 @@ function Layout() {
     <ToastProvider>
       <Header />
       <main>
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </ToastProvider>

@@ -1,5 +1,4 @@
 .hero { position: relative; min-height: min(100dvh - 64px, 820px); display: flex; align-items: center; color: #fff; overflow: hidden; padding: 56px 0; }
-.bg { position: absolute; inset: -40px 0; background-size: cover; background-position: center; will-change: transform; z-index: -1; }
 .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 28, 20, 0.35), rgba(20, 28, 20, 0.7)); z-index: -1; }
 .heroInner { display: grid; gap: 8px; }
 .heroInner h1 { max-width: 14em; }
@@ -24,7 +23,7 @@
 
 .dark { background: var(--accent-dark); color: #f5f1ea; }
 .dark h2, .dark h3 { color: #fff; }
-.dark :global(.btn) { background: var(--wood); border-color: var(--wood); }
+.dark :global(.btn) { background: var(--wood-dark); border-color: var(--wood-dark); }
 .activities { display: grid; gap: 16px; margin: 24px 0 32px; }
 .act { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; }
 .act img { width: 96px; height: 96px; object-fit: cover; border-radius: 12px; }

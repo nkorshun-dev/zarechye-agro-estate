@@ -62,3 +62,12 @@ npm run preview
 1. Залейте проект в Git-репозиторий и подключите его в Netlify («Add new site» → «Import from Git»).
 2. Настройки подхватятся из `netlify.toml`: команда `npm run build`, папка `dist`.
 3. Редирект `/* → /index.html 200` (SPA) уже настроен в `netlify.toml` и `public/_redirects`, прямые ссылки вида `/houses/rybatsky` работают.
+
+## Локальные изображения и шрифты
+
+Фото первого экрана — равнинное озеро с лесом и небольшими островками, без гор. Это иллюстративный пейзаж: точное место съёмки и автор не установлены; фото не заявляется снимком озера Дривяты.
+
+- [Исходное фото Unsplash](https://images.unsplash.com/photo-1653760253102-e50369ee652c), [Unsplash License](https://unsplash.com/license): бесплатное использование, в том числе коммерческое, и изменение изображения.
+- Локальные варианты: `public/img/hero-{640,1024,1600,2400}.{avif,webp}` и `hero-m{400,600,800}.{avif,webp}`. Максимальный мобильный файл — 29 078 байт AVIF / 45 170 байт WebP (менее 200 КБ). Используются `picture`, `srcset` и соответствующий preload; первый экран без анимации появления и параллакса.
+- Шрифты в `public/fonts/`: Lora (500–600) и Manrope (400–700), локальные WOFF2 с кириллическим и латинским подмножествами, `font-display: swap`; кириллические файлы предзагружаются.
+- Шрифты распространяются по SIL Open Font License 1.1: [Lora](public/fonts/Lora-OFL.txt), [Manrope](public/fonts/Manrope-OFL.txt). Оригиналы лицензий: [Google Fonts / Lora](https://raw.githubusercontent.com/google/fonts/main/ofl/lora/OFL.txt), [Google Fonts / Manrope](https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt).
