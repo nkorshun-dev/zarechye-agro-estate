@@ -5,6 +5,10 @@
 .lead { max-width: 36em; font-size: 1.1rem; }
 .search { display: grid; gap: 12px; padding: 16px; margin-top: 16px; color: var(--text); max-width: 900px; }
 .search :global(.field) select { min-height: 48px; }
+@media (max-width: 640px) {
+  /* Keep the CTA clear of the injected badge's 44px hit area; shot=1 has no badge. */
+  :global(body:has(#nk-demo-badge)) .search > button[type='submit'] { margin-inline-start: 24px; }
+}
 @media (min-width: 760px) {
   .search { grid-template-columns: 2fr 1fr auto; align-items: end; }
   .search :global(.btn) { min-height: 48px; }
