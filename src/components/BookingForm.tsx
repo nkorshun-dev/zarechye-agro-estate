@@ -19,9 +19,10 @@ interface Props {
 }
 
 /** Маска + удаление: Backspace по «)» или «-» стирает цифру, а не возвращает символ. */
-const nextPhone = (prev: string, raw: string): string => {
+const nextPhone = (prev: string, raw: string, caret: number): string => {
   const next = formatPhone(raw)
-  if (raw.length >= prev.length) return next
+  // заменили всё поле (вставка, автозаполнение), а не стёрли один символ — цифры не трогаем
+  if (raw !== prev.slice(0, caret) + prev.slice(caret + 1)) return next
   const digits = raw.replace(/\D/g, '')
   if (digits.length <= 3) return ''
   return next === prev ? formatPhone(digits.slice(0, -1)) : next
@@ -51,7 +52,7 @@ export default function BookingForm({ submitting, onBack, onSubmit }: Props) {
     const el = e.target
     const digitsBefore = el.value.slice(0, el.selectionStart ?? 0).replace(/\D/g, '').length
     const atEnd = el.selectionStart === el.value.length
-    const phone = nextPhone(v.phone, el.value)
+    const phone = nextPhone(v.phone, el.value, el.selectionStart ?? el.value.length)
     setV({ ...v, phone })
     if (atEnd) return
     let pos = 0

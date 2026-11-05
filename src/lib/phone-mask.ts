@@ -1,9 +1,8 @@
 /** Маска белорусского номера: +375 (29) 123-45-67. Принимает ввод и вставку в любом виде (8029…, 375…, 29…). */
 export const formatPhone = (input: string): string => {
-  let d = input.replace(/\D/g, '')
-  if (d.startsWith('80')) d = '375' + d.slice(2)
-  else if (!d.startsWith('375')) d = '375' + d
-  d = d.slice(3, 12)
+  // «+375» маски (или его стёртая часть) — не номер; затем снимаем набранный пользователем 375/80:
+  // кодов оператора на 37 и 80 нет, поэтому «+375 (375…» и «+375 (80…» — это префикс, а не номер.
+  const d = input.replace(/^\s*\+(375|37|3)?/, '').replace(/\D/g, '').replace(/^375/, '').replace(/^80/, '').slice(0, 9)
   if (d.length === 0) return input.length > 0 ? '+375' : ''
   const parts = [d.slice(0, 2), d.slice(2, 5), d.slice(5, 7), d.slice(7, 9)]
   let out = `+375 (${parts[0]}`
